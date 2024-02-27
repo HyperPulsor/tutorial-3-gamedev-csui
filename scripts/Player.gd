@@ -11,6 +11,7 @@ const NORMAL_SPEED = 400
 
 onready var ap = $AnimationPlayer
 onready var sprite = $Sprite
+onready var particle = $MoveParticles
 
 var velocity = Vector2()
 var is_dashing = false
@@ -43,13 +44,18 @@ func get_input():
 	
 	if Input.is_action_pressed('right'):
 		sprite.flip_h = false
-
+		particle.scale.x = -1
+		particle.position.x = -33
+		particle.position.y = 118
 		if is_dashing:
 			velocity.x += speed + DASH_SPEED
 		else:
 			velocity.x += speed
 		
 	if Input.is_action_pressed('left'):
+		particle.scale.x = 1
+		particle.position.x = 33
+		particle.position.y = 118
 		sprite.flip_h = true
 		if is_crouching:
 			speed = CROUCH_SPEED
@@ -77,11 +83,13 @@ func stand():
 func update_animations(horizontal_direction):
 	if is_on_floor():
 		if horizontal_direction == 0:
+			particle.emitting = false
 			if is_crouching:
 				ap.play("crouch")
 			else:
 				ap.play("idle")
 		else:
+			particle.emitting = true
 			if is_crouching:
 				ap.play("crouch_walk")
 			elif is_dashing:
@@ -89,6 +97,7 @@ func update_animations(horizontal_direction):
 			else:
 				ap.play("run")
 	else:
+		particle.emitting = false
 		if velocity.y < 0:
 			ap.play("jump")
 		elif velocity.y > 0:
