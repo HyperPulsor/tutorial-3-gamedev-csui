@@ -7,16 +7,16 @@ export (int) var jump_speed = -600
 const UP = Vector2(0,-1)
 const DASH_SPEED = 500
 const CROUCH_SPEED = 100
-const NORMAL_SPEED = 400
 
 onready var ap = $AnimationPlayer
 onready var sprite = $Sprite
 onready var particle = $MoveParticles
 
+var normal_speed : int
 var velocity = Vector2()
 var is_dashing = false
-var is_crouching = false
 var can_dash = true
+var is_crouching = false
 var jump_max = 2
 var jump_count = 0
 
@@ -40,7 +40,7 @@ func get_input():
 	if is_crouching:
 		speed = CROUCH_SPEED
 	else:
-		speed = NORMAL_SPEED
+		speed = normal_speed
 	
 	if Input.is_action_pressed('right'):
 		sprite.flip_h = false
@@ -57,9 +57,6 @@ func get_input():
 		particle.position.x = 33
 		particle.position.y = 118
 		sprite.flip_h = true
-		if is_crouching:
-			speed = CROUCH_SPEED
-			
 		if is_dashing:
 			velocity.x -= speed + DASH_SPEED
 		else:
@@ -103,8 +100,12 @@ func update_animations(horizontal_direction):
 		elif velocity.y > 0:
 			ap.play("fall")
 
+func _ready():
+	normal_speed = speed
+
 func _physics_process(delta):
 	var horizontal_direction = Input.get_axis("left", "right")
+	print(horizontal_direction)
 	velocity.y += delta * GRAVITY
 	get_input()
 	velocity = move_and_slide(velocity, UP)
