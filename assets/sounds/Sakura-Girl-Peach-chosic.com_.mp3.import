@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Sakura-Girl-Peach-chosic.com_.mp3-36e4d2c66dd583fad5b1f22dd8106675.mp3str"
+
+[deps]
+
+source_file="res://assets/sounds/Sakura-Girl-Peach-chosic.com_.mp3"
+dest_files=[ "res://.import/Sakura-Girl-Peach-chosic.com_.mp3-36e4d2c66dd583fad5b1f22dd8106675.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

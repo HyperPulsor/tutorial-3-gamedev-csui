@@ -105,7 +105,6 @@ func _ready():
 
 func _physics_process(delta):
 	var horizontal_direction = Input.get_axis("left", "right")
-	print(horizontal_direction)
 	velocity.y += delta * GRAVITY
 	get_input()
 	velocity = move_and_slide(velocity, UP)
